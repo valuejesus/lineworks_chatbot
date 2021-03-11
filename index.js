@@ -76,7 +76,7 @@ function getServerToken(jwttoken, callback) {
 
 function sendMessage(token, accountId, message) {
     const postdata = {
-        url: 'https://apis.worksmobile.com/' + APIID + '/message/sendMessage/v2',
+        url: 'https://apis.worksmobile.com/r/' + APIID + '/message/v1/bot/' + BOTNO + '/message/push',
         headers : {
           'Content-Type' : 'application/json;charset=UTF-8',
           'consumerKey' : CONSUMERKEY,
