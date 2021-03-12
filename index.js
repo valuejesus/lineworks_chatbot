@@ -1,5 +1,6 @@
 "use strict";
 
+// モジュールインポート
 const express = require("express");
 const server = express();
 const bodyParser = require("body-parser");
@@ -8,6 +9,7 @@ const https = require("https");
 const request = require("request");
 const qs = require("querystring");
 
+//変数
 const APIID = process.env.APIID;
 const SERVERID = process.env.SERVERID;
 const CONSUMERKEY = process.env.CONSUMERKEY;
@@ -16,12 +18,15 @@ const BOTNO = process.env.BOTNO;
 
 server.use(bodyParser.json());
 
+// Webアプリケーション起動
 server.listen(process.env.PORT || 3000);
 
+// サーバー起動確認
 server.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+// Botからメッセージに応答
 server.post('/callback', (req, res) => {
     res.sendStatus(200);
 
@@ -36,6 +41,7 @@ server.post('/callback', (req, res) => {
     });
 });
 
+//サーバーAPI用JWT取得
 function getJWT(callback){
     const iss = SERVERID;
     const iat = Math.floor(Date.now() / 1000);
@@ -76,7 +82,7 @@ function getServerToken(jwttoken, callback) {
 
 function sendMessage(token, accountId, message) {
     const postdata = {
-        url: 'https://apis.worksmobile.com/r/' + APIID + '/message/v1/bot/' + BOTNO + '/message/push',
+        url: 'https://apis.worksmobile.com/' + APIID + '/message/sendMessage/v2',
         headers : {
           'Content-Type' : 'application/json;charset=UTF-8',
           'consumerKey' : CONSUMERKEY,
